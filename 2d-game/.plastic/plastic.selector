@@ -1,4 +1,0 @@
-repository "Battleship/Battleship@11270661079326@cloud"
-  path "/"
-    br "/main"
-    co "/main"
