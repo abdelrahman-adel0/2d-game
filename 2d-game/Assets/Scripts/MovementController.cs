@@ -1,17 +1,17 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
+
 public class MovementController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 direction = Vector2.down;
+	private bool isDead = false;
     public float speed = 5f;
 
     [Header("Input")]
-    public KeyCode inputUp = KeyCode.W;
-    public KeyCode inputDown = KeyCode.S;
-    public KeyCode inputLeft = KeyCode.A;
-    public KeyCode inputRight = KeyCode.D;
+    public InputActionReference moveAction; // 👈 assign in Inspector
 
     [Header("Sprites")]
     public AnimatedSpriteRenderer spriteRendererUp;
@@ -20,26 +20,41 @@ public class MovementController : MonoBehaviour
     public AnimatedSpriteRenderer spriteRendererRight;
     public AnimatedSpriteRenderer spriteRendererDeath;
     private AnimatedSpriteRenderer activeSpriteRenderer;
+    
+    AudioManager audioManager;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         activeSpriteRenderer = spriteRendererDown;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+    private void OnEnable()
+    {
+        moveAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.action.Disable();
     }
 
     private void Update()
     {
-        if (Input.GetKey(inputUp)) {
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+
+        // Normalize to 4 directions (like your original logic)
+        if (input.y > 0.5f)
             SetDirection(Vector2.up, spriteRendererUp);
-        } else if (Input.GetKey(inputDown)) {
+        else if (input.y < -0.5f)
             SetDirection(Vector2.down, spriteRendererDown);
-        } else if (Input.GetKey(inputLeft)) {
+        else if (input.x < -0.5f)
             SetDirection(Vector2.left, spriteRendererLeft);
-        } else if (Input.GetKey(inputRight)) {
+        else if (input.x > 0.5f)
             SetDirection(Vector2.right, spriteRendererRight);
-        } else {
+        else
             SetDirection(Vector2.zero, activeSpriteRenderer);
-        }
     }
 
     private void FixedUpdate()
@@ -64,30 +79,37 @@ public class MovementController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Explosion")) {
-            DeathSequence();
-        }
-    }
+	{
+    	if (isDead) return;
+
+    	if (other.gameObject.layer == LayerMask.NameToLayer("Explosion") ||
+        	other.CompareTag("Enemy"))
+    	{
+        	DeathSequence();
+    	}
+	}
 
     private void DeathSequence()
-    {
-        enabled = false;
-        GetComponent<BombController>().enabled = false;
+	{
+    	if (isDead) return;
+    	isDead = true;
 
-        spriteRendererUp.enabled = false;
-        spriteRendererDown.enabled = false;
-        spriteRendererLeft.enabled = false;
-        spriteRendererRight.enabled = false;
-        spriteRendererDeath.enabled = true;
+    	enabled = false;
+    	GetComponent<BombController>().enabled = false;
 
-        Invoke(nameof(OnDeathSequenceEnded), 1.25f);
-    }
+    	spriteRendererUp.enabled = false;
+    	spriteRendererDown.enabled = false;
+    	spriteRendererLeft.enabled = false;
+    	spriteRendererRight.enabled = false;
+    	spriteRendererDeath.enabled = true;
+
+    	Invoke(nameof(OnDeathSequenceEnded), 1.25f);
+	}
 
     private void OnDeathSequenceEnded()
     {
         gameObject.SetActive(false);
-        GameManager.Instance.CheckWinState();
+        GameManager.Instance.LoseGame();
     }
 
 }

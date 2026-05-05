@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
 
 public class BombController : MonoBehaviour
 {
     [Header("Bomb")]
-    public KeyCode inputKey = KeyCode.LeftShift;
+    public InputActionReference bombAction; // 👈 NEW
     public GameObject bombPrefab;
     public float bombFuseTime = 3f;
     public int bombAmount = 1;
@@ -20,15 +21,29 @@ public class BombController : MonoBehaviour
     [Header("Destructible")]
     public Tilemap destructibleTiles;
     public Destructible destructiblePrefab;
+    
+    AudioManager audioManager;
+    
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
 
     private void OnEnable()
     {
         bombsRemaining = bombAmount;
+        bombAction.action.Enable(); // 👈 important
+    }
+
+    private void OnDisable()
+    {
+        bombAction.action.Disable();
     }
 
     private void Update()
     {
-        if (bombsRemaining > 0 && Input.GetKeyDown(inputKey)) {
+        if (bombsRemaining > 0 && bombAction.action.triggered)
+        {
             StartCoroutine(PlaceBomb());
         }
     }
@@ -63,6 +78,8 @@ public class BombController : MonoBehaviour
 
     private void Explode(Vector2 position, Vector2 direction, int length)
     {
+        audioManager.PlaySFX(audioManager.Explosion);
+        
         if (length <= 0) {
             return;
         }
@@ -92,6 +109,8 @@ public class BombController : MonoBehaviour
         {
             Instantiate(destructiblePrefab, position, Quaternion.identity);
             destructibleTiles.SetTile(cell, null);
+
+			ScoreManager.Instance.AddScore(5);
         }
     }
 
