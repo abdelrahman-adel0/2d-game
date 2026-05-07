@@ -6,7 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    private GameObject[] players;
+    private GameObject player;
+    private GameObject[] enemies;
+
+    public GameObject winPanel;
+    public GameObject losePanel;
+	private AudioManager audioManager;
 
     private void Awake()
     {
@@ -26,28 +31,66 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+		GameObject audioObj = GameObject.FindGameObjectWithTag("Audio");
+		if (audioObj != null)
+		{
+    		audioManager = audioObj.GetComponent<AudioManager>();
+		}
     }
 
     public void CheckWinState()
     {
-        int aliveCount = 0;
+        int aliveEnemies = 0;
 
-        for (int i = 0; i < players.Length; i++)
+        for (int i = 0; i < enemies.Length; i++)
         {
-            if (players[i].activeSelf) {
-                aliveCount++;
+            if (enemies[i].activeSelf)
+            {
+                aliveEnemies++;
             }
         }
 
-        if (aliveCount <= 1) {
-            Invoke(nameof(NewRound), 3f);
+        // 🟢 WIN CONDITION
+        if (aliveEnemies == 0)
+        {
+            WinGame();
         }
     }
 
-    private void NewRound()
+    public void LoseGame()
     {
+        Time.timeScale = 0f;
+        losePanel.SetActive(true);
+
+		if (audioManager != null)
+        {
+            audioManager.PlaySFX(audioManager.Death);
+        }
+    }
+
+    private void WinGame()
+    {
+        Time.timeScale = 0f;
+        winPanel.SetActive(true);
+		
+		if (audioManager != null)
+        	audioManager.PlayWin();
+
+		FindFirstObjectByType<TimerManager>().enabled = false;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+	public void GoToMenu()
+	{
+    	Time.timeScale = 1f;
+    	SceneManager.LoadScene("Menu");
+	}
 }
