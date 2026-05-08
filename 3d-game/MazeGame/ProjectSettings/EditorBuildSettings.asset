@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MazeGame.unity
     guid: 33d8192180ee7484dbb8763c8e5bb182
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: 598ec4db31fb6064c90b657c00674f27
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: 598eaf54cd12bff4c9c5f8c5fd1d4edf
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject exit;
 
     [Header("Timer")]
-    public float levelTime = 180f; // 3 minutes default
+    public float levelTime = 60f; // 3 minutes default
     private float timeRemaining;
     private bool timerRunning = false;
 
@@ -93,16 +93,14 @@ public class GameManager : MonoBehaviour
     {
         timerRunning = false;
         Debug.Log("You Win!");
-        if (winScreen != null)
-            winScreen.SetActive(true);
+        SceneManager.LoadScene("WinScreen");
     }
 
     public void LoseGame()
     {
         timerRunning = false;
         Debug.Log("You Lose!");
-        if (loseScreen != null)
-            loseScreen.SetActive(true);
+        SceneManager.LoadScene("LoseScreen");
     }
 
     public void RestartLevel()
