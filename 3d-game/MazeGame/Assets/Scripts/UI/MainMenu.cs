@@ -1,23 +1,38 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class MainMenu : MonoBehaviour
 {
-   public void StartGame()
+    private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void StartGame()
+    {
+        AudioManager.Instance?.PlayButtonClick();
         SceneManager.LoadSceneAsync("Maze1");
     }
 
     public void OpenLevels()
     {
-        SceneManager.LoadScene("LevelMenu");
+        AudioManager.Instance?.PlayButtonClick();
+        SceneManager.LoadSceneAsync("LevelMenu");
+    }
+
+    public void HowToPlay()
+    {
+        AudioManager.Instance?.PlayButtonClick();
+        SceneManager.LoadSceneAsync("HowToPlay1");
     }
 
     public void QuitGame()
     {
+        AudioManager.Instance?.PlayButtonClick();
         Application.Quit();
-        // For testing in editor:
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+#endif
     }
 }

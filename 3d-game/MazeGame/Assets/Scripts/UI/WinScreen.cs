@@ -21,6 +21,7 @@ public class WinScreen : MonoBehaviour
 
     public void ReplayLevel()
     {
+        AudioManager.Instance?.PlayButtonClick();
         if (!string.IsNullOrEmpty(GameManager.lastGameScene))
             SceneManager.LoadScene(GameManager.lastGameScene);
         else
@@ -29,13 +30,16 @@ public class WinScreen : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        AudioManager.Instance?.PlayButtonClick();
         SceneManager.LoadScene("MainMenu");
     }
 
     public void LoadNextLevel()
     {
+        AudioManager.Instance?.PlayButtonClick();
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
 
         SceneManager.LoadScene(currentIndex + 1);
     }
+
 }

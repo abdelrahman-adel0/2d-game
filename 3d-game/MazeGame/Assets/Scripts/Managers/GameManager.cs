@@ -6,6 +6,15 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    // ── Reset statics on every domain reload (fixes "invalid GC handle" spam) ──
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    static void ResetStatics()
+    {
+        Instance           = null;
+        lastGameScene      = null;
+        lastGameSceneIndex = 0;
+    }
+
     public static GameManager Instance;
     public static int lastGameSceneIndex;
 
@@ -17,7 +26,7 @@ public class GameManager : MonoBehaviour
     public GameObject exit;
 
     [Header("Timer")]
-    public float levelTime = 60f; // 3 minutes default
+    public float levelTime = 900f; // 3 minutes default
     private float timeRemaining;
     private bool timerRunning = false;
 
@@ -78,6 +87,9 @@ public class GameManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+
+    
+
     public void KeyCollected()
     {
         keysCollected++;
@@ -117,8 +129,10 @@ public class GameManager : MonoBehaviour
         Cursor.visible = true;
         timerRunning = false;
         Debug.Log("You Lose!");
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance?.DeathHit);
         StartCoroutine(LoadLoseScreen());
     }
+
     IEnumerator LoadLoseScreen()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoseScreen");

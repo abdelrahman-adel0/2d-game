@@ -7,6 +7,9 @@ public class KeyPickup : MonoBehaviour
         // Check if it's the player
         if (other.CompareTag("Player"))
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.SpawnSFX);
+                
             // Tell GameManager a key was collected
             GameManager.Instance.KeyCollected();
 

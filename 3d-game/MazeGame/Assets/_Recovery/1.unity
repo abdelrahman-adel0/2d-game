@@ -446,7 +446,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651504846}
-  - component: {fileID: 1651504847}
+  - component: {fileID: 1651504845}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Audio
@@ -454,6 +454,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1651504845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651504844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247bb8405165dc34ebf9fc355b1a2cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  musicSource: {fileID: 963796549}
+  sfxSource: {fileID: 2051614902}
+  BackgroundMusic: {fileID: 8300000, guid: 9979ff1b9bc5d944ab9110567a6cef73, type: 3}
+  ButtonClick: {fileID: 8300000, guid: b6f9c4efa7dc77e4d856bc6556db5a73, type: 3}
+  Walk: {fileID: 8300000, guid: b62b050f1218f59468d3822c22b4ba18, type: 3}
+  WallHit: {fileID: 8300000, guid: 7f03f1129ac64e841bc3c6f49412eb7a, type: 3}
+  SpawnSFX: {fileID: 8300000, guid: a414a73261908f446bf10c1d7ebcd99f, type: 3}
+  DeathHit: {fileID: 8300000, guid: b8ccaece6e841214896ef42b0be4895e, type: 3}
+  LoseLaugh: {fileID: 8300000, guid: 5b28b97af3072e74cb264bb456f4dd78, type: 3}
+  PumpkinLaugh: {fileID: 8300000, guid: 4eb7450e3055828469bc6a7e1e0fbfc6, type: 3}
 --- !u!4 &1651504846
 Transform:
   m_ObjectHideFlags: 0
@@ -471,28 +493,6 @@ Transform:
   - {fileID: 2051614903}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1651504847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1651504844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e5b95f4c8b96dc41bb583b11e516bfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  musicSource: {fileID: 0}
-  sfxSource: {fileID: 0}
-  BackgroundMusic: {fileID: 8300000, guid: 9979ff1b9bc5d944ab9110567a6cef73, type: 3}
-  ButtonClick: {fileID: 8300000, guid: b6f9c4efa7dc77e4d856bc6556db5a73, type: 3}
-  Walk: {fileID: 8300000, guid: b62b050f1218f59468d3822c22b4ba18, type: 3}
-  WallHit: {fileID: 8300000, guid: 7f03f1129ac64e841bc3c6f49412eb7a, type: 3}
-  SpawnSFX: {fileID: 8300000, guid: a414a73261908f446bf10c1d7ebcd99f, type: 3}
-  DeathHit: {fileID: 8300000, guid: b8ccaece6e841214896ef42b0be4895e, type: 3}
-  LoseLaugh: {fileID: 8300000, guid: 5b28b97af3072e74cb264bb456f4dd78, type: 3}
-  PumpkinLaugh: {fileID: 8300000, guid: 4eb7450e3055828469bc6a7e1e0fbfc6, type: 3}
 --- !u!1 &1691160620
 GameObject:
   m_ObjectHideFlags: 0
