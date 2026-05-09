@@ -1,10 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerHitDetector : MonoBehaviour
 {
     [Header("References")]
     public AnnoyingCompanion companion;
     public Transform skeleton;              // drag M_Skeleton here
+    public TextMeshProUGUI livesText;
 
     [Header("Hit Settings")]
     public int maxHits = 3;
@@ -14,6 +16,11 @@ public class PlayerHitDetector : MonoBehaviour
     private int hitCount = 0;
     private float hitCooldownTimer = 0f;
     private bool isDead = false;
+
+    void Start()
+    {
+        UpdateLivesUI();
+    }
 
     void Update()
     {
@@ -50,12 +57,19 @@ public class PlayerHitDetector : MonoBehaviour
             RegisterHit();
     }
 
+    void UpdateLivesUI()
+    {
+        if (livesText != null)
+            livesText.text = "Lives: " + (maxHits - hitCount);
+    }
+
     void RegisterHit()
     {
         hitCount++;
         hitCooldownTimer = hitCooldown;
         Debug.Log("Player hit! " + hitCount + "/" + maxHits);
         companion?.OnPlayerHit();
+        UpdateLivesUI();
 
         if (hitCount >= maxHits)
             PlayerDies();

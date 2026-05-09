@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI keysText;
+    public TextMeshProUGUI allKeysText;
 
     void Awake()
     {
@@ -91,6 +92,19 @@ public class GameManager : MonoBehaviour
         Debug.Log("Exit unlocked!");
         if (exit != null)
             exit.SetActive(true);
+        if (allKeysText != null)
+        {
+            allKeysText.text = "You have collected all the keys, exit unlocked";
+            allKeysText.gameObject.SetActive(true);
+            StartCoroutine(HideAllKeysText());
+        }
+    }
+
+    IEnumerator HideAllKeysText()
+    {
+        yield return new WaitForSeconds(4f);
+        if (allKeysText != null)
+            allKeysText.gameObject.SetActive(false);
     }
 
     public void WinGame()
