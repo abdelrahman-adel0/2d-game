@@ -27,6 +27,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadSceneAsync("HowToPlay1");
     }
 
+    public void HowToPlay()
+    {
+        SceneManager.LoadScene("HowToPlay1");
+    }
+
     public void QuitGame()
     {
         AudioManager.Instance?.PlayButtonClick();

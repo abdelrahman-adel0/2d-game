@@ -1,12 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    // ── Reset statics on every domain reload (fixes "invalid GC handle" spam) ──
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    static void ResetStatics() { Instance = null; }
-
     public static AudioManager Instance;
 
     [Header("Audio Sources")]
@@ -92,3 +87,4 @@ public class AudioManager : MonoBehaviour
             sfxSource.volume = Mathf.Clamp01(volume);
     }
 }
+
