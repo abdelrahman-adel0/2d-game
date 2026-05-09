@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 
@@ -8,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static int lastGameSceneIndex;
+    public static string lastGameScene;
+    public GameObject AnnoyingCompanion;
 
     [Header("Key Settings")]
     public int totalKeys = 3;
@@ -17,132 +18,114 @@ public class GameManager : MonoBehaviour
     public GameObject exit;
 
     [Header("Timer")]
-    public float levelTime = 900f; // 3 minutes default
+    public float levelTime = 300f;
     private float timeRemaining;
     private bool timerRunning = false;
+    private bool gameOver = false;
 
-    [Header("UI Screens")]
-    public GameObject winScreen;
-    public GameObject loseScreen;
+    [Header("UI")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI keysText;
 
-    // Store the game scene name so LoseScreen can access it
-    public static string lastGameScene;
     void Awake()
     {
-    
-      Instance = this;
-
+        Instance = this;
     }
 
     void Start()
     {
-        // Lock exit at start
         if (exit != null)
             exit.SetActive(false);
 
-        // Hide screens
-        if (winScreen != null)  winScreen.SetActive(false);
-        if (loseScreen != null) loseScreen.SetActive(false);
-
-        // Start timer
         timeRemaining = levelTime;
         timerRunning = true;
 
         lastGameScene = SceneManager.GetActiveScene().name;
         lastGameSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        // Show initial key count
+
         UpdateKeysUI();
     }
 
     void Update()
     {
-        if (timerRunning)
-        {
-            timeRemaining -= Time.deltaTime;
-            UpdateTimerUI();
+        if (!timerRunning) return;
 
-            if (timeRemaining <= 0)
-            {
-                timeRemaining = 0;
-                timerRunning = false;
-                LoseGame();
-            }
+        timeRemaining -= Time.deltaTime;
+        UpdateTimerUI();
+
+        if (timeRemaining <= 0)
+        {
+            timeRemaining = 0;
+            timerRunning = false;
+            LoseGame();
         }
     }
 
     void UpdateTimerUI()
     {
         if (timerText == null) return;
-
         int minutes = Mathf.FloorToInt(timeRemaining / 60);
         int seconds = Mathf.FloorToInt(timeRemaining % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-
-    
+    public float GetTimeRemaining() => timeRemaining;
 
     public void KeyCollected()
     {
         keysCollected++;
         UpdateKeysUI();
-        Debug.Log("Keys collected: " + keysCollected + "/" + totalKeys);
-
-        // UIManager.Instance?.UpdateKeyCount(keysCollected, totalKeys);
-
+        Debug.Log("Keys: " + keysCollected + "/" + totalKeys);
         if (keysCollected >= totalKeys)
             UnlockExit();
     }
 
     void UpdateKeysUI()
     {
-    if (keysText != null)
-        keysText.text = "Keys: " + keysCollected + " / " + totalKeys;
+        if (keysText != null)
+            keysText.text = "Keys: " + keysCollected + " / " + totalKeys;
     }
 
     void UnlockExit()
     {
-        Debug.Log("All keys collected! Exit unlocked!");
+        Debug.Log("Exit unlocked!");
         if (exit != null)
             exit.SetActive(true);
     }
 
     public void WinGame()
     {
+        if (gameOver) return;
+        gameOver = true;
         timerRunning = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Debug.Log("You Win!");
-        StartCoroutine(LoadWinScreen());
+        StartCoroutine(LoadScene("WinScreen"));
     }
 
-    IEnumerator LoadWinScreen()
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WinScreen");
-        yield return asyncLoad;
-    }
-    
     public void LoseGame()
     {
+        if (gameOver) return;
+        gameOver = true;
+        timerRunning = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        timerRunning = false;
+          // Trigger companion death sequence
+        FindObjectOfType<AnnoyingCompanion>()?.OnPlayerDeath();
         Debug.Log("You Lose!");
         AudioManager.Instance?.PlaySFX(AudioManager.Instance?.DeathHit);
-        StartCoroutine(LoadLoseScreen());
+        StartCoroutine(LoadScene("LoseScreen"));
     }
 
-    IEnumerator LoadLoseScreen()
+    IEnumerator LoadScene(string sceneName)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoseScreen");
-        yield return asyncLoad;
+        yield return SceneManager.LoadSceneAsync(sceneName);
     }
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(lastGameScene);
     }
 
     public void GoToMainMenu()
