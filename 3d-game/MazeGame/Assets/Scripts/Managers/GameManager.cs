@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public static int lastGameSceneIndex;
 
     [Header("Key Settings")]
     public int totalKeys = 3;
@@ -24,6 +26,8 @@ public class GameManager : MonoBehaviour
     public GameObject loseScreen;
     public TextMeshProUGUI timerText;
 
+    // Store the game scene name so LoseScreen can access it
+    public static string lastGameScene;
     void Awake()
     {
     
@@ -44,6 +48,9 @@ public class GameManager : MonoBehaviour
         // Start timer
         timeRemaining = levelTime;
         timerRunning = true;
+
+        lastGameScene = SceneManager.GetActiveScene().name;
+        lastGameSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     void Update()
@@ -92,15 +99,30 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         timerRunning = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Debug.Log("You Win!");
-        SceneManager.LoadScene("WinScreen");
+        StartCoroutine(LoadWinScreen());
     }
 
+    IEnumerator LoadWinScreen()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WinScreen");
+        yield return asyncLoad;
+    }
+    
     public void LoseGame()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         timerRunning = false;
         Debug.Log("You Lose!");
-        SceneManager.LoadScene("LoseScreen");
+        StartCoroutine(LoadLoseScreen());
+    }
+    IEnumerator LoadLoseScreen()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoseScreen");
+        yield return asyncLoad;
     }
 
     public void RestartLevel()

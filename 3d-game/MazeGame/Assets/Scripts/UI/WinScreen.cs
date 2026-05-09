@@ -8,18 +8,23 @@ public class WinScreen : MonoBehaviour
 
     private void Start()
     {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-        // If this is the final level
-        if (currentIndex == 4)
-        {
-            nextLevelButton.SetActive(false);
-        }
+        // Use the saved index from GameManager
+        int completedIndex = GameManager.lastGameSceneIndex;
+
+        // Hide next level button if it was the final level (index 4)
+        if (nextLevelButton != null)
+            nextLevelButton.SetActive(completedIndex != 4);
     }
 
     public void ReplayLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (!string.IsNullOrEmpty(GameManager.lastGameScene))
+            SceneManager.LoadScene(GameManager.lastGameScene);
+        else
+            SceneManager.LoadScene("Maze1"); // fallback
     }
 
     public void LoadMainMenu()
