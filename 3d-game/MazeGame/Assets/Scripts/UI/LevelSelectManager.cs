@@ -19,17 +19,14 @@ public class LevelSelectManager : MonoBehaviour
     public void LoadLevel2()
     {
         AudioManager.Instance?.PlayButtonClick();
-        // Scene not ready yet — shows message in editor
-        Debug.Log("Level 2 coming soon!");
-        // SceneManager.LoadScene("Maze2"); // uncomment when ready
+        SceneManager.LoadScene("Maze2");
     }
 
     public void LoadLevel3()
     {
         AudioManager.Instance?.PlayButtonClick();
-        // Scene not ready yet — shows message in editor
-        Debug.Log("Level 3 coming soon!");
-        // SceneManager.LoadScene("Maze3"); // uncomment when ready
+        SceneManager.LoadScene("Maze3");
+
     }
 
     public void GoBack()

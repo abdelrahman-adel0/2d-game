@@ -16,7 +16,7 @@ public class WinScreen : MonoBehaviour
 
         // Hide next level button if it was the final level (index 4)
         if (nextLevelButton != null)
-            nextLevelButton.SetActive(completedIndex != 4);
+            nextLevelButton.SetActive(completedIndex != 6);
     }
 
     public void ReplayLevel()

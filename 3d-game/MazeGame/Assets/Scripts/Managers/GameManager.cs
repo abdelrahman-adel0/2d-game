@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
           // Trigger companion death sequence
-        FindObjectOfType<AnnoyingCompanion>()?.OnPlayerDeath();
+        FindFirstObjectByType<AnnoyingCompanion>()?.OnPlayerDeath();
         Debug.Log("You Lose!");
         AudioManager.Instance?.PlaySFX(AudioManager.Instance?.DeathHit);
         StartCoroutine(LoadScene("LoseScreen"));

@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip DeathHit;
     public AudioClip LoseLaugh;
     public AudioClip PumpkinLaugh;
+    public AudioClip WallMovement;
 
     private void Awake()
     {
@@ -42,6 +43,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic()
     {
+        Debug.Log("musicSource: " + musicSource);
+        Debug.Log("BackgroundMusic: " + BackgroundMusic);
+    
         if (musicSource == null || BackgroundMusic == null) return;
 
         if (!musicSource.isPlaying)
@@ -86,5 +90,11 @@ public class AudioManager : MonoBehaviour
         if (sfxSource != null)
             sfxSource.volume = Mathf.Clamp01(volume);
     }
+
+    public bool IsSFXPlaying()
+{
+    return sfxSource.isPlaying;
+}
+    
 }
 

@@ -14,24 +14,30 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LevelMenu.unity
     guid: c58227edd3cf9c74fb51bf6b5e148b43
-  - enabled: 1
-    path: Assets/Scenes/Maze1.unity
-    guid: 22d532594dbd54f4ab56ec4517658d25
   - enabled: 0
     path: Assets/Scenes/MazeGame.unity
     guid: 33d8192180ee7484dbb8763c8e5bb182
-  - enabled: 1
-    path: Assets/Scenes/WinScreen.unity
-    guid: 598ec4db31fb6064c90b657c00674f27
-  - enabled: 1
-    path: Assets/Scenes/LoseScreen.unity
-    guid: 598eaf54cd12bff4c9c5f8c5fd1d4edf
   - enabled: 1
     path: Assets/Scenes/HowToPlay1.unity
     guid: 5cc4075aa02eb8041b37f12b5a08b1bd
   - enabled: 1
     path: Assets/Scenes/HowToPlay2.unity
     guid: 7c09cac01d40d25418dfa9743c636a86
+  - enabled: 1
+    path: Assets/Scenes/Maze1.unity
+    guid: 22d532594dbd54f4ab56ec4517658d25
+  - enabled: 1
+    path: Assets/Scenes/Maze2.unity
+    guid: 1cd0104cc3321344982023736bcf1bd5
+  - enabled: 1
+    path: Assets/Scenes/Maze3.unity
+    guid: 00fd4aaa2e233214eb747beec9e24988
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: 598ec4db31fb6064c90b657c00674f27
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: 598eaf54cd12bff4c9c5f8c5fd1d4edf
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
