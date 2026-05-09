@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject winScreen;
     public GameObject loseScreen;
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI keysText;
 
     // Store the game scene name so LoseScreen can access it
     public static string lastGameScene;
@@ -51,6 +52,8 @@ public class GameManager : MonoBehaviour
 
         lastGameScene = SceneManager.GetActiveScene().name;
         lastGameSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // Show initial key count
+        UpdateKeysUI();
     }
 
     void Update()
@@ -81,12 +84,19 @@ public class GameManager : MonoBehaviour
     public void KeyCollected()
     {
         keysCollected++;
+        UpdateKeysUI();
         Debug.Log("Keys collected: " + keysCollected + "/" + totalKeys);
 
         // UIManager.Instance?.UpdateKeyCount(keysCollected, totalKeys);
 
         if (keysCollected >= totalKeys)
             UnlockExit();
+    }
+
+    void UpdateKeysUI()
+    {
+    if (keysText != null)
+        keysText.text = "Keys: " + keysCollected + " / " + totalKeys;
     }
 
     void UnlockExit()
