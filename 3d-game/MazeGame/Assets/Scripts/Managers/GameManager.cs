@@ -6,15 +6,6 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    // ── Reset statics on every domain reload (fixes "invalid GC handle" spam) ──
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    static void ResetStatics()
-    {
-        Instance           = null;
-        lastGameScene      = null;
-        lastGameSceneIndex = 0;
-    }
-
     public static GameManager Instance;
     public static int lastGameSceneIndex;
 
