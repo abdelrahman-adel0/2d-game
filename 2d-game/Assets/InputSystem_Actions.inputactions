@@ -124,6 +124,17 @@
                     "action": "Bomb",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4e9614f-62bf-4dfa-a026-5fe8c0efbee1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Bomb",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

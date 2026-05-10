@@ -1,0 +1,5 @@
+/mnt/d/Work/University/Level3/Graphics/Graphics-project/2d-game/.utmp/RelWithDebInfo/u3z44n3n/armeabi-v7a/CMakeFiles/edit_cache.dir
+/mnt/d/Work/University/Level3/Graphics/Graphics-project/2d-game/.utmp/RelWithDebInfo/u3z44n3n/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/mnt/d/Work/University/Level3/Graphics/Graphics-project/2d-game/.utmp/RelWithDebInfo/u3z44n3n/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/mnt/d/Work/University/Level3/Graphics/Graphics-project/2d-game/.utmp/RelWithDebInfo/u3z44n3n/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/mnt/d/Work/University/Level3/Graphics/Graphics-project/2d-game/.utmp/RelWithDebInfo/u3z44n3n/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

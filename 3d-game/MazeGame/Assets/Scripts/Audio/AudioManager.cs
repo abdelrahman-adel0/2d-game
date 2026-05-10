@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
     
         if (musicSource == null || BackgroundMusic == null) return;
 
-        if (!musicSource.isPlaying)
+        if (musicSource.isPlaying)
         {
             musicSource.clip = BackgroundMusic;
             musicSource.loop = true;
